@@ -1,16 +1,27 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 const Keypad = ({result, setResult, action, setAction, appliedValue, setAppliedValue}) => {
-
+    const [isResult, setIsResult] = useState(false)
     const handleSetResult = (val) => {
-        if (val === '.' && !result.includes('.')){
-            setResult(prevVal => {
-                return prevVal + val
-            })
-        } else if (val !== '.'){
-            setResult(prevVal => {
-                return prevVal + val
-            })
+        if(!isResult){
+            if (val === '.' && !result.includes('.')){
+                setResult(prevVal => {
+                    return prevVal + val
+                })
+            } else if (val !== '.'){
+                setResult(prevVal => {
+                    return prevVal + val
+                })
+            }
+        }
+        if(isResult){
+            if (val === '.' && !result.includes('.')){
+                setResult(val)
+                setIsResult(false)
+            } else if (val !== '.'){
+                setResult(val)
+                setIsResult(false)
+            }
         }
     }
     const handleSetAction = (act) => {
@@ -32,7 +43,6 @@ const Keypad = ({result, setResult, action, setAction, appliedValue, setAppliedV
             })
         }
     }
-
     const handleSetValues = (val) => {
         if(action){
             handleSetAppliedValue(val)
@@ -46,12 +56,30 @@ const Keypad = ({result, setResult, action, setAction, appliedValue, setAppliedV
         setAction('')
         setAppliedValue('')
     }
+    const handleCalculate = () => {
+        if(result && action && appliedValue) {
+            action = action === 'x' ? '*' : action === '÷' ? '/' : action
+            let value = `${Number(result)} ${action} ${appliedValue}`
+            setResult(`${eval(value)}`)
+            setAction('')
+            setAppliedValue('')
+            setIsResult(true)
+        }
+    }
+    const handleValueFlip = () => {
+        if(!action){
+            Number(result) > 0 ? setResult(`-${result}`) : setResult(result.replace('-',''))
+        }
+        if(action){
+            Number(appliedValue) > 0 ? setAppliedValue(`-${appliedValue}`) : setAppliedValue(appliedValue.replace('-',''))
+        }
+    }
 
     return (
         <div className='keypad'>
             <div className='row-one'>
                 <button onClick={handleClear}>AC</button>
-                <button>+/-</button>
+                <button onClick={handleValueFlip}>+/-</button>
                 <button >%</button>
                 <button onClick={() => handleSetAction('÷')}>÷</button>
             </div>
@@ -76,7 +104,7 @@ const Keypad = ({result, setResult, action, setAction, appliedValue, setAppliedV
             <div className='row-five'>
                 <button onClick={()=>handleSetValues('0')}>0</button>
                 <button onClick={()=>handleSetValues('.')}>.</button>
-                <button>=</button>
+                <button onClick={handleCalculate}>=</button>
             </div>
         </div>
     )
