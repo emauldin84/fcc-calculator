@@ -1,9 +1,10 @@
 import React from 'react'
 
-const Display = ({display}) => {
+const Display = ({result, appliedValue, action}) => {
     return (
-        <div>
-            <p>{display}</p>
+        <div className="display">
+            <p>{action}</p>
+            <p>{action && appliedValue ? appliedValue : result}</p>
         </div>
     )
 }
