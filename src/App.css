@@ -28,13 +28,17 @@ html {
 #display{
   font-size: 40px;
   margin-left: auto;
-  width: auto;
+  width: 300px;
   margin-top: 0;
   margin-bottom: 10px;
+  overflow: scroll;
+  text-align: end;
 }
 
 .displaytext{
-  color: #faeb2c;
+  color: #3d144c;
+  text-shadow: #1685f8 1px 2px 3px;
+
   margin-right: 15px;
 }
 p.displaytext{
@@ -48,7 +52,7 @@ p.displaytext{
 }
 button {
   background-color: #3d144c;
-  color: #1685f8;
+  color: #faeb2c;
   border: none;
   height: 40px;
   width: 40px;
