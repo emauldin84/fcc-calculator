@@ -1,6 +1,61 @@
 .App, html {
   text-align: center;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+html {
+  background-image:
+    linear-gradient(
+      to right, 
+      #c33764, #1d2671
+    );
 }
 
+.calculator{
+  background-color: #e900ff;
+  width: 300px;
+  border-radius: 5%;
+  padding: 10px;
+}
 
+.display{
+  display: flex;
+  flex-direction: column;
+  /* height: 75px; */
+}
+#display{
+  font-size: 40px;
+  margin-left: auto;
+  width: auto;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.displaytext{
+  color: #faeb2c;
+  margin-right: 15px;
+}
+p.displaytext{
+  margin-bottom: 0;
+  width: auto;
+  margin-left: auto;
+}
+#action{
+  margin-top: 0;
+  height: 20px;
+}
+button {
+  background-color: #3d144c;
+  color: #1685f8;
+  border: none;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  margin: 5px;
+}
+#clear, #equals{
+  width: 80px;
+  border-radius: 5%;
+}

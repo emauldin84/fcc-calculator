@@ -6,12 +6,10 @@ import Keypad from './Keypad'
 const Calculator = () => {
     const [equation, setEquation] = useState(null)
     const [action, setAction] = useState('')
-    const [result, setResult] = useState('')
+    const [result, setResult] = useState('0')
     const [appliedValue, setAppliedValue] = useState('')
-    console.log('RESULT', result)
     return (
         <div className='calculator'>
-            <p>Calculator</p>
             <Display result={result} action={action} appliedValue={appliedValue}/>
             <Keypad 
                 result={result} 

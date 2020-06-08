@@ -2,13 +2,26 @@ import React, {useState} from 'react'
 
 const Keypad = ({result, setResult, action, setAction, appliedValue, setAppliedValue}) => {
     const [isResult, setIsResult] = useState(false)
+    
     const handleSetResult = (val) => {
         if(!isResult){
             if (val === '.' && !result.includes('.')){
                 setResult(prevVal => {
                     return prevVal + val
                 })
-            } else if (val !== '.'){
+            } 
+            if (val === '0' && result[0] === '0' && result.length === 1){
+                return
+            } 
+            if (val === '0' && result[0] === '0' && result[1] !== 0){
+                setResult(prevVal => {
+                    return prevVal + val
+                })
+            } 
+            if (val !== '.' && val !== '0' && result[0] === '0'){
+                setResult(val)
+            }
+            else if (val !== '.'){
                 setResult(prevVal => {
                     return prevVal + val
                 })
@@ -18,7 +31,8 @@ const Keypad = ({result, setResult, action, setAction, appliedValue, setAppliedV
             if (val === '.' && !result.includes('.')){
                 setResult(val)
                 setIsResult(false)
-            } else if (val !== '.'){
+            } 
+            else if (val !== '.'){
                 setResult(val)
                 setIsResult(false)
             }
@@ -28,8 +42,13 @@ const Keypad = ({result, setResult, action, setAction, appliedValue, setAppliedV
         if (result && appliedValue){
             return
         }
-        if (result) {
-            setAction(act)
+        if (result !== '0') {
+            if (act === '-' && action === '-'){
+                setAction('+')
+            } else {
+                setAction(act)
+
+            }
         }
     }
     const handleSetAppliedValue = (val) => {
@@ -37,6 +56,8 @@ const Keypad = ({result, setResult, action, setAction, appliedValue, setAppliedV
             setAppliedValue(prevVal => {
                 return prevVal + val
             })
+        } if (val !== '.' && val !== '0' && appliedValue[0] === '0'){
+            setAppliedValue(val)
         } else if (val !== '.'){
             setAppliedValue(prevVal => {
                 return prevVal + val
@@ -52,7 +73,7 @@ const Keypad = ({result, setResult, action, setAction, appliedValue, setAppliedV
         }
     }
     const handleClear = () => {
-        setResult('')
+        setResult('0')
         setAction('')
         setAppliedValue('')
     }
@@ -78,33 +99,32 @@ const Keypad = ({result, setResult, action, setAction, appliedValue, setAppliedV
     return (
         <div className='keypad'>
             <div className='row-one'>
-                <button onClick={handleClear}>AC</button>
+                <button id="clear" onClick={handleClear}>AC</button>
                 <button onClick={handleValueFlip}>+/-</button>
-                <button >%</button>
-                <button onClick={() => handleSetAction('÷')}>÷</button>
+                <button id="divide" onClick={() => handleSetAction('÷')}>÷</button>
             </div>
             <div className='row-two'>
-                <button onClick={()=>handleSetValues('7')}>7</button>
-                <button onClick={()=>handleSetValues('8')}>8</button>
-                <button onClick={()=>handleSetValues('9')}>9</button>
-                <button onClick={() => handleSetAction('x')}>x</button>
+                <button id="seven" onClick={()=>handleSetValues('7')}>7</button>
+                <button id="eight" onClick={()=>handleSetValues('8')}>8</button>
+                <button id="nine" onClick={()=>handleSetValues('9')}>9</button>
+                <button id="multiply" onClick={() => handleSetAction('x')}>x</button>
             </div>
             <div className='row-three'>
-                <button onClick={()=>handleSetValues('4')}>4</button>
-                <button onClick={()=>handleSetValues('5')}>5</button>
-                <button onClick={()=>handleSetValues('6')}>6</button>
-                <button onClick={() => handleSetAction('-')}>-</button>
+                <button id="four" onClick={()=>handleSetValues('4')}>4</button>
+                <button id="five" onClick={()=>handleSetValues('5')}>5</button>
+                <button id="six" onClick={()=>handleSetValues('6')}>6</button>
+                <button id="subtract" onClick={() => handleSetAction('-')}>-</button>
             </div>
             <div className='row-four'>
-                <button onClick={()=>handleSetValues('1')}>1</button>
-                <button onClick={()=>handleSetValues('2')}>2</button>
-                <button onClick={()=>handleSetValues('3')}>3</button>
-                <button onClick={() => handleSetAction('+')}>+</button>
+                <button id="one" onClick={()=>handleSetValues('1')}>1</button>
+                <button id="two" onClick={()=>handleSetValues('2')}>2</button>
+                <button id="three" onClick={()=>handleSetValues('3')}>3</button>
+                <button id="add" onClick={() => handleSetAction('+')}>+</button>
             </div>
             <div className='row-five'>
-                <button onClick={()=>handleSetValues('0')}>0</button>
-                <button onClick={()=>handleSetValues('.')}>.</button>
-                <button onClick={handleCalculate}>=</button>
+                <button id="zero" onClick={()=>handleSetValues('0')}>0</button>
+                <button id="decimal" onClick={()=>handleSetValues('.')}>.</button>
+                <button id="equals" onClick={handleCalculate}>=</button>
             </div>
         </div>
     )

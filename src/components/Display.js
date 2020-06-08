@@ -3,8 +3,8 @@ import React from 'react'
 const Display = ({result, appliedValue, action}) => {
     return (
         <div className="display">
-            <p>{action}</p>
-            <p>{action && appliedValue ? appliedValue : result}</p>
+            <p className='displaytext' id='action'>{action}</p>
+            <p className='displaytext' id="display">{action && appliedValue ? appliedValue : result}</p>
         </div>
     )
 }
